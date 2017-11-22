@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--********** Copyright 2016 Roku Corp.  All Rights Reserved. **********-->
+ 
+<!-- Description 
+	This node is used in RowList instead of default itemComponent.
+	ItemComponent consist from poster(HDPosterUrl field from Content Meta-Data) 
+	and text description below. Text description includes line of "Title" and 
+	"Description", Title and description fields respectively from Content Meta-Data.-->
+<component name="GridItemComponent" extends="Group" xsi:noNamespaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
+
+<interface>
+	<!--Content meta-data node. -->
+    <field id="itemContent" type="node" onChange="onItemContentChange"/>
+    <!--Set to the width of the item.  -->
+    <field id="width" type="float"  onChange="onWidthChange"/>
+    <!--Set to the height of the item.-->
+    <field id="height" type="float" onChange="onHeightChange"/>
+    <!--Set to the fractional value (0.0 to 1.0) that this list
+     item overlaps the focus region of the list. This value can be
+     used with scripts or interpolators to smoothly animate the
+     appearance of the list item as it enters/leaves the focus 
+     region.-->
+    <field id="focusPercent" type="float"/>
+</interface>
+
+<script type = "text/brightscript" uri = "pkg:/components/VideoGrid/GridItemComponent/GridItemComponent.brs"/>
+
+<children>
+	
+    <Poster
+        id="gridPoster"/>
+        
+    <Rectangle
+        id="descriptionZone"
+        color="0x111111"
+        opacity="0.7">
+        <Label
+            id="titleLabel"
+            color="0xFFFFFF"
+            wrap="true"
+            maxLines="1"
+            numLines="1"
+            inheritParentOpacity="false"
+            vertAlign="top"/>    
+        <Label
+            id="descriptionLabel"
+            wrap="true"
+            color="0xFFFFFF"
+            maxLines="1"
+            inheritParentOpacity="false"
+            vertAlign="top"/>
+    </Rectangle>
+    
+</children>
+
+</component>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<!--********** Copyright 2016 Roku Corp.  All Rights Reserved. **********-->
+
+<!--  
+The VideoGrid node is a set of nodes integrated with each other visually and functionally. Main goal of this node is to comfortably
+surf content on RowList and preview details for it, while live video is playing above it. Another feature is that all nodes 
+and its sub nodes can be reached by interfaces.
+ 
+Set of nodes is next: 
+FadingBackground - Background for all nodes. It is basically poster that gets picture Url from HDBackgroundImageUrl field of content meta-data
+				   of current focused item. 
+LiveVideo node - Is responsible for live video stream event handling and processing;
+ItemDetails - Is responsible for showing content details on screen, of current focused item including live stream content. 
+			  has next sub-labels in interface: Title, ReleaseDate, Description;
+Grid - is RowList with custom itemComponent which consist from poster(HDPosterUrl field from Content Meta-Data) and text description below.
+       Text description includes line of "Title" and "Description", Title and description fields respectively from Content Meta-Data.       
+DetailsScreen - is showed when we select any item from grid. And its consist from LabelList and Hud, which can be reached by interface with same
+				name of interfaces;
+
+When we launch VideoGrid node, by default, LiveVideo is focused node. Until video starts, there is
+loading animation and informative label occurs if loading failed.
+
+Also there is animation which triggers at switching focus between grid and liveVideo node. After switching focus 
+from LiveVideo node to Grid, LiveVideo size becomes smaller, which is controlled by liveGain parameter 
+and Grid node with ItemDetails node positions slides up, and vise versa.
+
+By pressing OK button on LiveVideo node its size fit full screen.
+The node supports all screen resolutions.
+
+Sample: 
+   'in scope of some scene
+	
+	m.gridNumRows = 5 
+    m.gridItemNum = 4
+	
+	m.VideoGrid = m.top.createChild("VideoGrid")
+	m.VideoGrid.offset = [122, 80]
+    m.VideoGrid.descAllign = "left"
+    m.VideoGrid.liveGain = 0.56
+    m.VideoGrid.liveContent = getLiveItemContent()
+    m.VideoGrid.GridItemNum = m.gridItemNum
+    
+    m.VideoGrid.liveVideo.liveUrl = "https://roku.s.cpl.delvenetworks.com/media/59021fabe3b645968e382ac726cd6c7b/60b4a471ffb74809beb2f7d5a15b3193/roku_ep_111_segment_1_final-cc_mix_033015-a7ec8a288c4bcec001c118181c668de321108861.m3u8"
+    m.VideoGrid.liveVideo.liveLoadingPoster = "pkg:/images/liveNotAvailable.png"
+    m.VideoGrid.liveVideo.Size = [824, 462]
+    
+    m.VideoGrid.Grid.content = getGridContent()
+    m.VideoGrid.Grid.ItemSize = [397 * m.gridItemNum + 30 * m.gridItemNum, 307]'222
+    m.VideoGrid.Grid.NumRows = m.gridNumRows
+    m.VideoGrid.Grid.RowSpacings = [40, 40, 40, 40]
+    m.VideoGrid.Grid.RowItemSize = [[397, 307]]
+    m.VideoGrid.Grid.RowItemSpacing = [[30, 0]]
+-->
+
+<component name="VideoGrid" extends="Group" xsi:noNamespaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
+
+<interface>
+	<!-- Color of background until HDBackgroundImageUrl isn't loaded. -->
+    <field id="backgroundColor"        type="color"        alias="fadingBackground.color" value="0x444444"/>
+    <!-- Content meta-data node of live video stream.-->
+    <field id="liveContent"            type="node"         onChange="onLiveContentChange"/>
+    <!-- Gives true if LiveVideo node is focused, and vise versa.-->
+    <field id="IsVideoFocused"         type="bool"         onChange="onNodeFocuseChange" value="true"/>
+    <!--Defines space from edge of screen to nodes, both horizontally and vertically, 
+          also is used in hud as horizontal space size for labels.-->
+    <field id="offset"                 type="vector2d"     onChange="onUIParamsChange"/>
+    <!--At animation description slides up and down, and its can be aligned to LiveVideo node left, or to center, by
+        setting respectively "left" or "center" values.-->
+    <field id="descAllign"             type="string"       onChange="onUIParamsChange"/>
+    <!--Sets relation of reduced LiveVideo node size and expanded.-->
+    <field id="liveGain"               type="float"        onChange="onUIParamsChange"/>
+    <!-- Sets number of not scrollable items in grid-->
+    <field id="gridItemNum"            type="int"          onChange="onUIParamsChange"/>
+    
+    <!-- Returns grid node -->    
+    <field id="Grid"                   type="node"/>
+    <!-- Returns ItemDetails node. Also ItemDetails can get labels by interface: 
+    	"Title", "ReleaseDate", "Description" -->
+    <field id="ItemDetails"            type="node"/>
+    <!-- Returns LiveVideo  node. Also this node contain next interface:
+    	 Hud - returns hud node,"Size" 2dvector sets width and height of live video, "LibeUrl" string - "URL adress of live stream", 
+    "liveLoadingPoster" URL - image that will be showed in case when loading of live stream failed -->
+    <field id="liveVideo"              type="node"/>
+    <!--  Returns DetailsScreen node. Has interface for labels: "Hud", "Buttons"-->
+    <field id="DetailsScreen"          type="node"/>
+	
+</interface>
+
+<script type="text/brightscript" uri="pkg:/components/VideoGrid/VideoGrid.brs"/>
+
+<children>
+    <FadingBackground
+        id="fadingBackground"/>
+
+    <Animation
+        id="scaleAnimation"
+        repeat="false"
+        duration="0.3"
+        easeFunction="inOutQuad">
+        <Vector2DFieldInterpolator
+        	id="ItemDetailsTranslation"
+            key="[0.0, 1.0]"/>
+        <Vector2DFieldInterpolator
+        	id="GridTranslation"
+            key="[0.0, 1.0]"/>
+        <Vector2DFieldInterpolator
+        	id="VideoSizeInterp"
+            key="[0.0, 1.0]"/>
+    </Animation>
+
+</children>
+
+</component>

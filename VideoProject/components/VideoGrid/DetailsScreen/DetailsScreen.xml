@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<!--********** Copyright 2016 Roku Corp.  All Rights Reserved. **********-->
+
+<!-- Description
+	Details screen is used for showing details based on content meta-data of item and label list of actions
+	like play, buy, or any other.-->
+
+<component name="DetailsScreen" extends="Group"  xsi:noNamespaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
+
+	<interface>		
+	    <!--Return hud node.-->
+		<field id="hud"     type="node"/>
+		<!--Return buttons node.-->
+		<field id="Buttons" type="node"/>
+		<!--Set content meta-data.-->
+		<field id="content" type="node" alwaysNotify="true" alias = "hud.content"/>
+		<!--It defines space from edge of screen to nodes, both horizontally and vertically, 
+          also is used in hud as horizontal space size for labels.-->
+		<field id="offset"  type="vector2d" onChange="OnOffsetChange"/>
+		<!--Setting this value for true shows details screen with animation and vise versa.-->
+		<field id="show"    type="bool"    value="false"  onChange="OnShowChange"/>
+	</interface>
+
+	<script type="text/brightscript" uri="pkg:/components/VideoGrid/DetailsScreen/DetailsScreen.brs"/>
+
+	<children>
+		
+		<LabelList 
+			id="Buttons"
+			color = "0xFFFFFFFF"
+			focusedColor = "0x000000FF"
+			numRows = "6"
+			visible="false"
+			vertFocusAnimationStyle="fixedFocusWrap"/>
+		
+		<Hud 
+			id="hud"/>
+				
+	</children>  
+</component>
