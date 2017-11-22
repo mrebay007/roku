@@ -9,7 +9,7 @@
     <![CDATA[
 
     sub init()
-      m.top.backgroundURI = "pkg:/images/rsgde_bg_hd.jpg"
+      m.top.backgroundURI = "pkg:/images/rsgde_dlg_bg_hd.9.png"
 
       m.readContentTask = createObject("roSGNode", "ContentReader")
       m.readContentTask.observeField("content", "setcategories")
