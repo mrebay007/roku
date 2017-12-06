@@ -1,27 +1,27 @@
-'********** Copyright 2016 Roku Corp.  All Rights Reserved. **********
+'********** Copyright 2017 CRAFTSY & SYMPOZ INC. All Rights Reserved. **********
 
+# CHANNEL DESCRIPTION
 title=Craftsy Roku App
 subtitle=How to Create a Roku Scene Graph Application
 
 major_version=1
-
 minor_version=0.1
 build_version=00001
 
 
-
+# CHANNEL ASSETS
+mm_icon_focus_sd=pkg:/images/focus-sd-248x140.png
 mm_icon_focus_hd=pkg:/images/focus-hd-336x210.png
 
-mm_icon_focus_sd=pkg:/images/focus-sd-248x140.png
 
-
+# SPLASH SCREEN + LOADING SCREEN ARTWORK
 splash_screen_sd=pkg:/images/splash-sd-720x480.png
-
 splash_screen_hd=pkg:/images/splash-hd-1280x720.png
-
-splash_screen_fhd=pkg:/images/rsgde_splash_hd.png
+splash_screen_fhd=pkg:/images/splash-hd-1920x1080.png 
 
 splash_color=#BADA55
 splash_min_time=1000
 
-ui_resolutions = "hd"
+
+# RESOLUTION
+ui_resolutions = "hd, fhd"
