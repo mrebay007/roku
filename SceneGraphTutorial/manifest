@@ -17,7 +17,7 @@ mm_icon_focus_hd=pkg:/images/focus-hd-336x210.png
 # SPLASH SCREEN + LOADING SCREEN ARTWORK
 splash_screen_sd=pkg:/images/splash-sd-720x480.png
 splash_screen_hd=pkg:/images/splash-hd-1280x720.png
-splash_screen_fhd=pkg:/images/splash-hd-1920x1080.png 
+splash_screen_fhd=pkg:/images/splash-fhd-1920x1080.png 
 
 splash_color=#BADA55
 splash_min_time=1000
